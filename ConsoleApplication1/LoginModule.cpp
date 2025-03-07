@@ -11,7 +11,13 @@
 void LoginModule::Run()
 {
 	ReadDatabase();
-	MainLoop();
+	//MainLoop();
+	std::string ex = "example";
+	std::string enc, dec;
+	enc = m_Cryptographer.EncryptVigenere(ex);
+	dec = m_Cryptographer.DecryptVigenere(enc);
+
+	std::cout << enc << std::endl << dec << std::endl;
 }
 
 void LoginModule::ReadDatabase()

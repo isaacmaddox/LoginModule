@@ -27,12 +27,18 @@
     <ClCompile Include="Validation.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Cryptographer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LoginModule.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Validation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Cryptographer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

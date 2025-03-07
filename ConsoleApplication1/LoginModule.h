@@ -3,12 +3,14 @@
 #include <map>
 #include <string>
 #include "Validation.h"
+#include "Cryptographer.h"
 
 class LoginModule
 {
 private:
 	std::map<std::string, std::string> m_Database;
 	Validation m_Validation;
+	Cryptographer m_Cryptographer;
 
 	const int MAX_PASSWORD_ATTEMPTS = 2;
 
