@@ -130,11 +130,13 @@
     <ClCompile Include="Console.cpp" />
     <ClCompile Include="ConsoleApplication1.cpp" />
     <ClCompile Include="Cryptographer.cpp" />
+    <ClCompile Include="Database.cpp" />
     <ClCompile Include="LoginModule.cpp" />
     <ClCompile Include="Validation.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cryptographer.h" />
+    <ClInclude Include="Database.h" />
     <ClInclude Include="LoginModule.h" />
     <ClInclude Include="Validation.h" />
   </ItemGroup>

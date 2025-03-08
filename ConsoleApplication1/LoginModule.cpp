@@ -6,90 +6,74 @@
 #include "LoginModule.h"
 #include "Console.cpp"
 
-#define str std::string
-
 void LoginModule::Run()
 {
-	ReadDatabase();
-	//MainLoop();
-	std::string ex = "example";
-	std::string enc, dec;
-	enc = m_Cryptographer.EncryptVigenere(ex);
-	dec = m_Cryptographer.DecryptVigenere(enc);
-
-	std::cout << enc << std::endl << dec << std::endl;
+	MainLoop();
 }
 
-void LoginModule::ReadDatabase()
-{
-	std::ifstream dbIn("db.txt");
-
-	if (!dbIn.is_open())
-	{
-		std::cout << "Could not read database file.\n";
-		return;
-	}
-
-	while (!dbIn.eof())
-	{
-		str username;
-		str password;
-
-		std::getline(dbIn, username);
-		std::getline(dbIn, password);
-
-		m_Database.insert(std::make_pair(username, password));
-	}
-
-	dbIn.close();
-}
 
 void LoginModule::Login()
 {
-	str username;
-	str password;
+	std::string username;
+	std::string password;
 
 	GetUserInput("Enter your username:", username, true);
 	GetUserInput("Enter your password:", password, false);
 
-	std::map<str, str>::iterator record = m_Database.find(username);
+	DBRecord result = m_Database.Find(username);
 
-	if (record == m_Database.end())
+	if (!result.found || result.value != password)
 	{
 		std::cout << "Invalid username or password\n";
 		return;
 	}
-
-	str _pwd = record->second;
-
-	if (_pwd != password)
-	{
-		std::cout << "Incorrect username or \n";
-		return;
-	}
 	
 	std::cout << "Welcome, " << username << std::endl;
+	std::cout << "SHHH! Your MFA code for this session is " << m_Validation.GenerateMFA() << std::endl;
 }
 
 void LoginModule::Signup()
 {
-	str username;
-	str password;
+	std::string username;
+	std::string password;
+	int passwordAttempts = 0;
 
 	GetUserInput("Enter your username:", username, true);
 	GetUserInput("Enter your password:", password, false);
 
-	std::map<str, str>::iterator record = m_Database.find(username);
-
-	if (record != m_Database.end())
+	if (!m_Validation.SqlInjection(username) ||
+		!m_Validation.SqlInjection(password))
 	{
-		std::cout << "This username is already in use. Please pick another one.\n";
+		std::cout << "Invalid inputs! Please try again\n";
 		return;
 	}
 
-	m_Database.insert(std::make_pair(username, password));
+	while (!m_Validation.PasswordPolicy(password))
+	{
+		++passwordAttempts;
 
-	std::cout << "You have been signed up!\n";
+		if (passwordAttempts >= MAX_PASSWORD_ATTEMPTS)
+		{
+			std::cout << "You will be assigned a default password. It will be sent to you in a secure email\n";
+			password = "default";
+			break;
+		}
+		else {
+			std::cout << "Your password does not meet the minimum requirements. You have " << MAX_PASSWORD_ATTEMPTS - passwordAttempts << " attempt(s) remaining\n";
+		}
+
+		GetUserInput("Enter your password:", password, false);
+	}
+
+	if (m_Database.Insert(username, password))
+	{
+		std::cout << "You have been signed up!\n";
+	}
+	else
+	{
+		std::cout << "This username is already in use!\n";
+	}
+
 }
 
 void LoginModule::MainLoop()
@@ -123,7 +107,7 @@ void LoginModule::MainLoop()
 
 char LoginModule::PromptUser()
 {
-	str userChoice;
+	std::string userChoice;
 
 	std::cout << "Do you want to (L)ogin, (S)ignup, or (Q)uit? ";
 	std::getline(std::cin, userChoice);
@@ -131,11 +115,12 @@ char LoginModule::PromptUser()
 	return userChoice.at(0);
 }
 
-void LoginModule::GetUserInput(str prompt, str& val, bool echo)
+void LoginModule::GetUserInput(std::string prompt, std::string& val, bool echo)
 {
 	SetStdinEcho(echo);
 
 	std::cout << prompt << " ";
+
 	getline(std::cin, val);
 
 	SetStdinEcho(true);

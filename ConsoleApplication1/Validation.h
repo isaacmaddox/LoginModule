@@ -18,5 +18,6 @@ public:
 	bool SqlInjection(std::string input);
 	bool PasswordPolicy(std::string input);
 	bool IntegerOverflow(std::string input);
+	uint32_t GenerateMFA();
 };
 

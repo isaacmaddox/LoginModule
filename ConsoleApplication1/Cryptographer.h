@@ -8,12 +8,14 @@ private:
 	std::string m_AlphaKey = "ARGOSROCK";
 	int m_NumberKey = 1963;
 
-	const char MIN_CHAR = '!';
-	const char MAX_CHAR = '~';
-	const char CHAR_RANGE = MAX_CHAR - MIN_CHAR + 1;
+	const int MIN_CHAR = '!';
+	const int MAX_CHAR = '~';
+	const int CHAR_RANGE = MAX_CHAR - MIN_CHAR + 1;
 
 public:
 	std::string EncryptVigenere(std::string& input);
 	std::string DecryptVigenere(std::string& input);
+	std::string EncryptNumber(int& input);
+	int DecryptNumber(std::string& input);
 };
 

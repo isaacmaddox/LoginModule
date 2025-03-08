@@ -1,5 +1,7 @@
 #include "Validation.h"
 
+#include <random>
+
 bool Validation::SqlInjection(std::string input)
 {
 	for (const auto& character : m_DisallowedChars)
@@ -41,4 +43,13 @@ bool Validation::IntegerOverflow(std::string input)
 	{
 		return false;
 	}
+}
+
+uint32_t Validation::GenerateMFA()
+{
+	std::random_device rand;
+	std::mt19937 rng;
+	std::uniform_int_distribution<std::mt19937::result_type> dist(1000000, INT_MAX);
+
+	return dist(rng);
 }

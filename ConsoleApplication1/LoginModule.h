@@ -2,20 +2,21 @@
 
 #include <map>
 #include <string>
+
+#include "Database.h"
 #include "Validation.h"
 #include "Cryptographer.h"
 
 class LoginModule
 {
 private:
-	std::map<std::string, std::string> m_Database;
+	Database m_Database;
 	Validation m_Validation;
 	Cryptographer m_Cryptographer;
 
 	const int MAX_PASSWORD_ATTEMPTS = 2;
 
 private:
-	void ReadDatabase();
 	void MainLoop();
 	char PromptUser();
 	void Login();
@@ -23,6 +24,7 @@ private:
 	void GetUserInput(std::string prompt, std::string& val, bool echo);
 
 public:
+	LoginModule() : m_Database(Database("db.txt")) {};
 	void Run();
 };
 
