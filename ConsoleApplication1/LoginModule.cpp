@@ -109,8 +109,7 @@ char LoginModule::PromptUser()
 {
 	std::string userChoice;
 
-	std::cout << "Do you want to (L)ogin, (S)ignup, or (Q)uit? ";
-	std::getline(std::cin, userChoice);
+	GetUserInput("Do you want to (L)ogin, (S)ignup, or (Q)uit?", userChoice, true);
 
 	return userChoice.at(0);
 }
