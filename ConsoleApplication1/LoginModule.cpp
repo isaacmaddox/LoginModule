@@ -1,7 +1,5 @@
 #include <iostream>
-#include <map>
 #include <string>
-#include <fstream>
 
 #include "LoginModule.h"
 #include "Console.cpp"
@@ -28,7 +26,7 @@ void LoginModule::Login()
 		return;
 	}
 	
-	std::cout << "Welcome, " << username << std::endl;
+	std::cout << "Welcome, " << m_Cryptographer.DecryptVigenere(username) << std::endl;
 	std::cout << "SHHH! Your MFA code for this session is " << m_Validation.GenerateMFA() << std::endl;
 }
 
@@ -109,7 +107,7 @@ char LoginModule::PromptUser()
 {
 	std::string userChoice;
 
-	GetUserInput("Do you want to (L)ogin, (S)ignup, or (Q)uit?", userChoice, true);
+	GetUserInput_Unsafe("Do you want to (L)ogin, (S)ignup, or (Q)uit?", userChoice, true);
 
 	return userChoice.at(0);
 }
@@ -120,7 +118,19 @@ void LoginModule::GetUserInput(std::string prompt, std::string& val, bool echo)
 
 	std::cout << prompt << " ";
 
-	getline(std::cin, val);
+	std::string response;
+	getline(std::cin, response);
+
+	val = m_Cryptographer.EncryptVigenere(response);
 
 	SetStdinEcho(true);
+}
+
+void LoginModule::GetUserInput_Unsafe(std::string prompt, std::string& val, bool echo)
+{
+	std::string e_Response;
+
+	GetUserInput(prompt, e_Response, echo);
+
+	val = m_Cryptographer.DecryptVigenere(e_Response);
 }

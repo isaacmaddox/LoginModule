@@ -1,6 +1,6 @@
-#include "Validation.h"
-
 #include <random>
+
+#include "Validation.h"
 
 bool Validation::SqlInjection(std::string input)
 {
@@ -45,10 +45,13 @@ bool Validation::IntegerOverflow(std::string input)
 	}
 }
 
+/**
+ * Adapted from https://stackoverflow.com/questions/7560114/random-number-c-in-some-range
+ */
 uint32_t Validation::GenerateMFA()
 {
 	std::random_device rand;
-	std::mt19937 rng;
+	std::mt19937 rng(rand());
 	std::uniform_int_distribution<std::mt19937::result_type> dist(1000000, INT_MAX);
 
 	return dist(rng);

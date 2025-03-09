@@ -129,6 +129,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Console.cpp" />
+    <ClCompile Include="DefaultPassword.cpp" />
     <ClCompile Include="Entry.cpp" />
     <ClCompile Include="Cryptographer.cpp" />
     <ClCompile Include="Database.cpp" />
@@ -138,6 +139,7 @@
   <ItemGroup>
     <ClInclude Include="Cryptographer.h" />
     <ClInclude Include="Database.h" />
+    <ClInclude Include="DefaultPassword.h" />
     <ClInclude Include="LoginModule.h" />
     <ClInclude Include="Validation.h" />
   </ItemGroup>
