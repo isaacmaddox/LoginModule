@@ -4,17 +4,17 @@
 #include <string>
 
 #include "Database.h"
-#include "Validation.h"
 #include "Cryptographer.h"
-#include "DefaultPassword.h"
+#include "PasswordHandler.h"
+#include "Validation.h"
 
 class LoginModule
 {
 private:
 	Database m_Database;
-	Validation m_Validation;
 	Cryptographer m_Cryptographer;
-	DefaultPassword m_DefaultPassword;
+	Validation m_Validation;
+	PasswordHandler m_PasswordHandler;
 
 	const int MAX_PASSWORD_ATTEMPTS = 2;
 
@@ -24,10 +24,12 @@ private:
 	void Login();
 	void Signup();
 	void GetUserInput(std::string prompt, std::string& val, bool echo);
-	void GetUserInput_Unsafe(std::string prompt, std::string& val, bool echo);
 
 public:
-	LoginModule() : m_Database(Database("db.txt")) {};
+	LoginModule() : m_Database(Database("db.txt")), 
+		m_Cryptographer(Cryptographer()),
+		m_Validation(Validation()),
+		m_PasswordHandler(PasswordHandler()) {};
 	void Run();
 };
 

@@ -3,7 +3,7 @@
 #include "Cryptographer.h"
 
 
-std::string Cryptographer::EncryptVigenere(std::string& input)
+std::string Cryptographer::EncryptVigenere(const std::string& input)
 {
 	std::ostringstream result;
 
@@ -22,7 +22,7 @@ std::string Cryptographer::EncryptVigenere(std::string& input)
 	return result.str();
 }
 
-std::string Cryptographer::DecryptVigenere(std::string& input)
+std::string Cryptographer::DecryptVigenere(const std::string& input)
 {
 	std::ostringstream result;
 
@@ -62,7 +62,7 @@ std::string Cryptographer::EncryptNumber(int& input)
 	return result.str();
 }
 
-int Cryptographer::DecryptNumber(std::string& input)
+int Cryptographer::DecryptNumber(const std::string& input)
 {
 	std::ostringstream result;
 	std::string keyString = std::to_string(m_NumberKey);

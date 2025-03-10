@@ -13,9 +13,9 @@ private:
 	const int CHAR_RANGE = MAX_CHAR - MIN_CHAR + 1;
 
 public:
-	std::string EncryptVigenere(std::string& input);
-	std::string DecryptVigenere(std::string& input);
+	std::string EncryptVigenere(const std::string& input);
+	std::string DecryptVigenere(const std::string& input);
 	std::string EncryptNumber(int& input);
-	int DecryptNumber(std::string& input);
+	int DecryptNumber(const std::string& input);
 };
 

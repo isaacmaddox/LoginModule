@@ -133,14 +133,19 @@
     <ClCompile Include="Entry.cpp" />
     <ClCompile Include="Cryptographer.cpp" />
     <ClCompile Include="Database.cpp" />
+    <ClCompile Include="IntegerOverflowError.h" />
     <ClCompile Include="LoginModule.cpp" />
+    <ClCompile Include="PasswordHandler.cpp" />
     <ClCompile Include="Validation.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cryptographer.h" />
     <ClInclude Include="Database.h" />
     <ClInclude Include="DefaultPassword.h" />
+    <ClInclude Include="InvalidPasswordException.h" />
     <ClInclude Include="LoginModule.h" />
+    <ClInclude Include="PasswordHandler.h" />
+    <ClInclude Include="SQLInjectionError.h" />
     <ClInclude Include="Validation.h" />
   </ItemGroup>
   <ItemGroup>

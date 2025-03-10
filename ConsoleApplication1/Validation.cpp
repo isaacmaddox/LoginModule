@@ -1,18 +1,24 @@
 #include <random>
 
 #include "Validation.h"
+#include "InvalidPasswordException.h"
+#include "SQLInjectionError.h"
+#include "IntegerOverflowError.h"
 
-bool Validation::SqlInjection(std::string input)
+bool Validation::SqlInjection(const std::string& input)
 {
 	for (const auto& character : m_DisallowedChars)
 	{
-		if (input.find(character) != std::string::npos) return false;
+		if (input.find(character) != std::string::npos)
+		{
+			throw SQLInjectionError("The input provided contains possible SQL injection");
+		}
 	}
 
 	return true;
 }
 
-bool Validation::PasswordPolicy(std::string input)
+bool Validation::PasswordPolicy(const std::string& input)
 {
 	// 0: At least 1 lowercase
 	// 1: At least 1 uppercase
@@ -27,10 +33,16 @@ bool Validation::PasswordPolicy(std::string input)
 		if (character >= 48 && character <= 57) checks[2] = 1;
 	}
 
-	return checks[0] && checks[1] && checks[2] && checks[3];
+	for (int i = 0; i < 4; ++i)
+	{
+		if (!checks[i])
+		{
+			throw InvalidPasswordException("The password you entered is invalid.");
+		}
+	}
 }
 
-bool Validation::IntegerOverflow(std::string input)
+bool Validation::IntegerOverflow(const std::string& input)
 {
 	if (input.length() > 10) return false;
 
@@ -41,7 +53,7 @@ bool Validation::IntegerOverflow(std::string input)
 	}
 	catch (std::exception e)
 	{
-		return false;
+		throw IntegerOverflowError("The number entered may result in an integer overflow");
 	}
 }
 

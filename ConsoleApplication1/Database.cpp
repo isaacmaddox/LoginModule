@@ -48,7 +48,7 @@ void Database::LoadDatabase()
 	dbIn.close();
 }
 
-DBRecord Database::Find(std::string& key)
+DBRecord Database::Find(const std::string& key)
 {
 	DBRecord recordResult;
 	std::map<std::string, std::string>::iterator result = m_DatabaseMap.find(key);
@@ -69,7 +69,7 @@ DBRecord Database::Find(std::string& key)
 	};
 }
 
-bool Database::Insert(std::string& key, std::string& value)
+bool Database::Insert(const std::string& key, const std::string& value)
 {
 	if (Find(key).found) return false;
 

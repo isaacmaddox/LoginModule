@@ -26,8 +26,8 @@ private:
 
 public:
 	Database(std::string filePath);
-	DBRecord Find(std::string& key);
-	bool Insert(std::string& key, std::string& value);
+	DBRecord Find(const std::string& key);
+	bool Insert(const std::string& key, const std::string& value);
 	void SaveChanges();
 };
 

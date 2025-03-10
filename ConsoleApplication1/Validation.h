@@ -15,9 +15,9 @@ private:
 	};
 
 public:
-	bool SqlInjection(std::string input);
-	bool PasswordPolicy(std::string input);
-	bool IntegerOverflow(std::string input);
+	bool SqlInjection(const std::string& input);
+	bool PasswordPolicy(const std::string& input);
+	bool IntegerOverflow(const std::string& input);
 	uint32_t GenerateMFA();
 };
 
